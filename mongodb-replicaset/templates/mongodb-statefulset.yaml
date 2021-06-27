@@ -332,26 +332,17 @@ spec:
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
     - metadata:
-        name: datadir
+        name: kishore-disk
         annotations:
         {{- range $key, $value := .Values.persistentVolume.annotations }}
           {{ $key }}: "{{ $value }}"
         {{- end }}
       spec:
         accessModes:
-        {{- range .Values.persistentVolume.accessModes }}
-          - {{ . | quote }}
-        {{- end }}
+        - ReadWriteOnce
         resources:
           requests:
-            storage: {{ .Values.persistentVolume.size | quote }}
-      {{- if .Values.persistentVolume.storageClass }}
-      {{- if (eq "-" .Values.persistentVolume.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistentVolume.storageClass }}"
-      {{- end }}
-      {{- end }}
+            storage: 20Gi
 {{- else }}
         - name: datadir
           emptyDir: {}
