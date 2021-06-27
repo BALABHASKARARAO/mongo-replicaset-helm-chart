@@ -149,7 +149,7 @@ spec:
               mountPath: /init
             - name: configdir
               mountPath: /data/configdb
-            - name: kishore-disk
+            - name: datadir
               mountPath: /data/db
           resources:
 {{ toYaml .Values.init.resources | indent 12 }}
@@ -216,7 +216,7 @@ spec:
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
           volumeMounts:
-            - name: kishore-disk
+            - name: datadir
               mountPath: /data/db
             - name: configdir
               mountPath: /data/configdb
@@ -332,7 +332,7 @@ spec:
 {{- if .Values.persistentVolume.enabled }}
   volumeClaimTemplates:
     - metadata:
-        name: kishore-disk
+        name: datadir
         annotations:
         {{- range $key, $value := .Values.persistentVolume.annotations }}
           {{ $key }}: "{{ $value }}"
