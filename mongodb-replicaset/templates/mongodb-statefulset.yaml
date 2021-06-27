@@ -149,7 +149,7 @@ spec:
               mountPath: /init
             - name: configdir
               mountPath: /data/configdb
-            - name: datadir
+            - name: kishore-disk
               mountPath: /data/db
           resources:
 {{ toYaml .Values.init.resources | indent 12 }}
@@ -216,7 +216,7 @@ spec:
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
           volumeMounts:
-            - name: datadir
+            - name: kishore-disk
               mountPath: /data/db
             - name: configdir
               mountPath: /data/configdb
